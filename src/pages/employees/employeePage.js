@@ -10,24 +10,20 @@ import { useLocation } from 'wouter';
 import Context from '../../context/userContext'
 import employee from '../../services/employee/employee'
 
-
-
 const theme = createTheme();
-const apiURL = process.env.REACT_APP_BASE_URL_API
 
 export default function EmployeePage() {
 
   const { isLogged } = useUser()
   const [, navigate] = useLocation()
-  const { token } = useContext(Context)
+  const { token }  = useContext(Context)
 
-  // if(!isLogged) return navigate('/')
+  console.log(token)
 
   useEffect(() => {
-    let tokenT = JSON.parse(token)
-    let tokenAuth = tokenT
-    // employee(tokenT).then((object) => {console.log(object)})
-  }, [token, employee])
+    employee(token)
+    // .then((object) => {console.log(object)})
+  }, [])
 
   const employees = [
     {

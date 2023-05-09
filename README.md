@@ -1,5 +1,10 @@
 # Survey applications
 Application to perform service qualification
+
+## Required
+
+- Node v16.18.1 or older
+
 ## Required dependencies
 
 - Material UI
@@ -11,11 +16,15 @@ Application to perform service qualification
 - Wouter
 
 ```npm
-    npm install wouter`# Survey applications
+    npm install wouter
 ```
 
 
 ## Raise the project
 Create the project with React, with the following command:
 
-`npx create-react-app <name-project>`
+Get the dependencies:
+
+```npm
+    npm install
+```
