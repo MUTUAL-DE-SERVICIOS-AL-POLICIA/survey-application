@@ -34,10 +34,6 @@ function LoginPage() {
 
         signIn(dataComponent)
 
-        // if(isLogged) /* Esto no funciona */
-        //     return( <Alert severity="success"> Inicio de sesión exitoso! </Alert> )
-        // else return ( <Alert severity="error"> Credenciales inválidas! </Alert> )
-
     }
 
     const theme = createTheme()

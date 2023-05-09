@@ -4,7 +4,7 @@ const Context = React.createContext({})
 
 export function EmployeeContextProvider ({ children }) {
 
-    const [employees, setEmployees] = useState([])
+    const [employees, setEmployees] = useState([]) // un estado global
 
     return <Context.Provider value={({ employees, setEmployees })}>
         { children }
