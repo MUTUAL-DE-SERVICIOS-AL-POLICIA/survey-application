@@ -7,11 +7,11 @@ export default function useUser() {
 
 	const signIn = useCallback(({ username, password }) => {
 		login({ username, password })
-			.then( token => {
-            	window.sessionStorage.setItem('token', JSON.stringify(token))
-				setToken(token)
+			.then( tokenLogin => {
+            		window.sessionStorage.setItem('token', JSON.stringify(tokenLogin.token))
+					setToken(tokenLogin.token)
 			}).catch(err => {
-				window.sessionStorage.removeItem('token', token)
+				window.sessionStorage.removeItem('token')
 				console.error(err)
 			})
 	}, [setToken])
@@ -24,6 +24,7 @@ export default function useUser() {
 	return {
 		isLogged: Boolean(token),
 		signIn,
-		signOut
+		signOut,
+		token
 	}
 }

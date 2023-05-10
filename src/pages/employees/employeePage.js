@@ -6,24 +6,23 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import EmployeeList from '../../components/employee/employeeList';
 import { useContext, useEffect } from 'react';
 import useUser from '../../hooks/useUser'
-import { useLocation } from 'wouter';
-import Context from '../../context/userContext'
 import employee from '../../services/employee/employee'
+import Header from '../../components/common/Header';
 
 const theme = createTheme();
 
 export default function EmployeePage() {
 
-  const { isLogged } = useUser()
-  const [, navigate] = useLocation()
-  const { token }  = useContext(Context)
+  const { isLogged, token } = useUser()
+  // const [, navigate] = useLocation()
 
-  console.log(token)
+    useEffect(() => {
+      // employee(token).then(() => { console.log("funciona")})
+      let employeesss  = employee(token)
+      console.log("en el use effect")
+      console.log(employeesss)
+    })
 
-  useEffect(() => {
-    employee(token)
-    // .then((object) => {console.log(object)})
-  }, [])
 
   const employees = [
     {
@@ -64,6 +63,7 @@ export default function EmployeePage() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <Header />
       <main>
         <Box
           sx={{

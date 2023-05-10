@@ -4,7 +4,7 @@ const object = {}
 
 export default function login({ username, password}) {
 
-    return fetch(`${apiURL}/login`, {
+    return fetch(`${apiURL}/survey/api/token/`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -16,7 +16,7 @@ export default function login({ username, password}) {
         }
         return res.json()
     }).then(res => {
-        object.token = res.token
+        object.token = res.access
         return object
     })
 }
