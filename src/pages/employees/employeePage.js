@@ -4,61 +4,69 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import EmployeeList from '../../components/employee/employeeList';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import useUser from '../../hooks/useUser'
-import employee from '../../services/employee/employee'
+import { getEmployees } from '../../services/employee/employee'
 import Header from '../../components/common/Header';
+import Context from '../../context/employeeContext'
+// import useEmployee from '../../hooks/useEmployee';
+import ContextLogin from '../../context/userContext'
 
 const theme = createTheme();
 
 export default function EmployeePage() {
 
-  const { isLogged, token } = useUser()
-  // const [, navigate] = useLocation()
+  // const [employees, setEmployees] = useEmployee()
+  const [listEmployees, setListEmployees] = useState([])
+  const {token} = useContext(ContextLogin)
+  const [, saveEmployees] = useContext(Context)
 
     useEffect(() => {
-      // employee(token).then(() => { console.log("funciona")})
-      let employeesss  = employee(token)
-      console.log("en el use effect")
-      console.log(employeesss)
-    })
+      getEmployees(token)
+        .then(employees => {
+          setListEmployees(employees.data)
+          saveEmployees(employees.data)
+        })
+    }, [])
+
+    // console.log(listEmployees)
 
 
-  const employees = [
-    {
-      id: 1,
-      first_name: "leonel",
-      second_name: "maximo",
-      last_name: "vargas",
-      second_last_name: "ramirez",
-      identity_card: 9101918,
-      active: true,
-      area_id: 1,
-      picture: 'hombre1.jpeg'
-    },
-    {
-      id: 2,
-      first_name: "Carmen",
-      second_name: "Ana",
-      last_name: "gomez",
-      second_last_name: "bolañoz",
-      identity_card: 871112,
-      active: true,
-      area_id: 1,
-      picture: 'mujer2.jpeg'
-    },
-    {
-      id: 3,
-      first_name: "Julia",
-      second_name: "Maria",
-      last_name: "Laserna",
-      second_last_name: "Paco",
-      identity_card: 881177,
-      active: true,
-      area_id: 1,
-      picture: 'mujer1.jpeg'
-    }
-  ]
+  // const employees = [
+  //   {
+  //     id: 1,
+  //     first_name: "leonel",
+  //     second_name: "maximo",
+  //     last_name: "vargas",
+  //     second_last_name: "ramirez",
+  //     identity_card: 9101918,
+  //     active: true,
+  //     area_id: 1,
+  //     picture: 'hombre1.jpeg'
+  //   },
+  //   {
+  //     id: 2,
+  //     first_name: "Carmen",
+  //     second_name: "Ana",
+  //     last_name: "gomez",
+  //     second_last_name: "bolañoz",
+  //     identity_card: 871112,
+  //     active: true,
+  //     area_id: 1,
+  //     picture: 'mujer2.jpeg'
+  //   },
+  //   {
+  //     id: 3,
+  //     first_name: "Julia",
+  //     second_name: "Maria",
+  //     last_name: "Laserna",
+  //     second_last_name: "Paco",
+  //     identity_card: 881177,
+  //     active: true,
+  //     area_id: 1,
+  //     picture: 'mujer1.jpeg'
+  //   }
+  // ]
 
   return (
     <ThemeProvider theme={theme}>
@@ -84,7 +92,7 @@ export default function EmployeePage() {
             </Typography>
           </Container>
         </Box>
-        <EmployeeList employees={employees}/>
+        <EmployeeList employees={listEmployees}/>
       </main>
     </ThemeProvider>
   );

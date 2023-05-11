@@ -2,51 +2,48 @@ import axios from 'axios';
 
 const apiURL = process.env.REACT_APP_BASE_API_URL
 
-// const object = {}
-
 // const apiURL = 'https://reqres.in/api/users?page=2'
 
+const object = {}
 
-export default function employee( token ) {
+export function getEmployees( token ) {
 
-    // console.log("dentro del servicio")
-    // console.log(token)
+    // try {
+    //     axios.get(`${apiURL}/survey/employee/`, {
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'Authorization': `Bearer ${token}`
+    //         }
+    //     }).then(response => {
+    //         return response
+    //     }).catch(e => {
+    //         console.log(e)
+    //     })
+    // } catch(e) {
+    //     console.log(e)
+    // }
 
-    console.log(token)
+    // // .then(response => {
+    // //     return response.data
+    // // })
+    // // .catch(error => {
+    // //     console.log(error)
+    // //     return null
+    // // })
 
-    axios.get(`${apiURL}/survey/employee/`, {
-    // axios.get(apiURL,{
+    return fetch(`${apiURL}/survey/employee/`, {
+        method: 'GET',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
+        },
+    }).then(res => {
+        if(!res.ok) {
+            throw new Error('Ocurrio un error en el inicio de sesión')
         }
+        return res.json()
+    }).then(res => {
+        object.data = res
+        return object
     })
-    .then(response => {
-        console.log("exitoso")
-        console.log(response)
-        return response
-    })
-    .catch(error => {
-        console.log("este es el error")
-        console.log(error)
-        return null
-    })
-
-    // let object = {}
-
-
-    // return fetch(`${apiURL}/survey/employee`,{
-    // return fetch(apiURL, {
-    //     method: 'GET',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //         'Authorization': `Token ${token}`
-    //     }
-    // }).then(res => res.json())
-    //     .then(response => {
-    //         object = response
-    //         console.log(response)
-    //     })
-
-    // return object
 }

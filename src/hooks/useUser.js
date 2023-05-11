@@ -8,7 +8,7 @@ export default function useUser() {
 	const signIn = useCallback(({ username, password }) => {
 		login({ username, password })
 			.then( tokenLogin => {
-            		window.sessionStorage.setItem('token', JSON.stringify(tokenLogin.token))
+            		window.sessionStorage.setItem('token', tokenLogin.token) /* JSON.stringify(tokenLogin.token) */
 					setToken(tokenLogin.token)
 			}).catch(err => {
 				window.sessionStorage.removeItem('token')

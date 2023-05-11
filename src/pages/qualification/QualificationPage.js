@@ -12,6 +12,10 @@ import CardHeader from '@mui/material/CardHeader';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { CardActionArea, Paper } from '@mui/material';
+import { useState } from 'react';
+import { useContext } from "react";
+import Context from '../../context/fullScreenContext'
+
 
 const tiers = [
   {

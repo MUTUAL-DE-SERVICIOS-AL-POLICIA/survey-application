@@ -14,6 +14,7 @@ export default function Header() {
 
     function fullScren() {
         alert("Me hizo click, oigame!")
+        // obtener el elemento a poner pantalla completa
     }
 
     return (
@@ -27,13 +28,10 @@ export default function Header() {
                 <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1}}>
                     MUSERPOL
                 </Typography>
-                <Button onClick={fullScren} variant="outlined" sx={{
-                }}>
+                <Button onClick={fullScren} variant="outlined">
                     Pantalla completa
                 </Button>
-                <Button onClick={logout} variant="outlined" sx={{
-                    my:1, mx: 1.5
-                }}>
+                <Button onClick={logout} variant="outlined" sx={{ my:1, mx: 1.5 }}>
                     Cerrar Sessión
                 </Button>
             </Toolbar>
