@@ -5,9 +5,12 @@ import Typography from '@mui/material/Typography';
 
 export default function Employee({ dataEmployee }) {
 
+    // console.log(dataEmployee.id)
+
     const [, navigate] = useLocation()
 
     const handleClick = (id) => {
+        console.log(id)
         navigate("/qualification")
     }
 
