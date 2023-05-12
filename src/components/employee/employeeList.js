@@ -4,8 +4,6 @@ import Employee from "./employee";
 
 export default function EmployeeList( { employees } ) {
 
-    console.log(employees)
-
     return (
         <Container sx={{ py: 8 }} maxWidth="md">
           <Grid container spacing={4}>

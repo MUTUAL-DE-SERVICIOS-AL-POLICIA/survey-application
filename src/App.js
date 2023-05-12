@@ -4,6 +4,7 @@ import LoginPage from './pages/login/LoginPage'
 import QualificationPage from './pages/qualification/QualificationPage'
 import { UserContextProvider } from './context/userContext'
 import { EmployeeContextProvider } from './context/employeeContext'
+import { QuestionContextProvider } from './context/questionContext'
 
 function App() {
 
@@ -20,10 +21,12 @@ function App() {
             component={EmployeePage}
             path="/employees"
           />
-          <Route
-            component={QualificationPage}
-            path="/qualification"
-          />
+          <QuestionContextProvider>
+            <Route
+              component={QualificationPage}
+              path="/qualification/:id"
+            />
+          </QuestionContextProvider>
         </EmployeeContextProvider>
       </UserContextProvider>
     </Switch>

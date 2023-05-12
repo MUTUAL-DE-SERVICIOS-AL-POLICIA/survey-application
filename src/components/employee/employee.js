@@ -5,13 +5,10 @@ import Typography from '@mui/material/Typography';
 
 export default function Employee({ dataEmployee }) {
 
-    // console.log(dataEmployee.id)
-
     const [, navigate] = useLocation()
 
     const handleClick = (id) => {
-        console.log(id)
-        navigate("/qualification")
+        navigate(`/qualification/${id}`)
     }
 
     return (
@@ -22,7 +19,7 @@ export default function Employee({ dataEmployee }) {
                 <CardMedia
                     component="img"
                     height="160"
-                    image={dataEmployee.picture}
+                    // image={dataEmployee.picture}
                     alt="random"
                 />
                 <CardContent sx={{ flexGrow: 1 }}>
