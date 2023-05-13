@@ -5,23 +5,12 @@ import ContextLogin from '../../context/userContext'
 import ContextQuestion from '../../context/questionContext'
 import Qualification from '../../components/qualification/qualification';
 
-const tiers = [
-  {
-    gif: '/malo.gif'
-  },
-  {
-    gif: '/regular.gif'
-  },
-  {
-    gif: '/bueno.gif'
-  },
-];
 
 export default function QualificationPage({ params }) {
 
   /* Obtenemos al empleado solicitado */
-  const [, , getEmployee ] = useEmployee()
-  const { id } = params
+  // const [, , getEmployee ] = useEmployee()
+  // const { id } = params
   /*              ---                 */
 
   /* Obtenemos las preguntas con su  posibles respuestas */
@@ -38,5 +27,10 @@ export default function QualificationPage({ params }) {
   }, [])
   /*                          ------                     */
 
-  return <Qualification parameter={params}  form={listQuestions} />;
+  console.log(listQuestions)
+
+  return (
+      // listQuestions === [] ? (<Qualification form={listQuestions} />) : (<p>Entra aca</p>)
+      <Qualification form={listQuestions} />
+  )
 }
