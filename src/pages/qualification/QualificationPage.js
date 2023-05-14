@@ -1,36 +1,20 @@
-import { useContext, useState, useEffect } from "react";
-import useEmployee from '../../hooks/useEmployee';
-import { getQuestionStructure } from '../../services/qualification/qualificationService';
-import ContextLogin from '../../context/userContext'
-import ContextQuestion from '../../context/questionContext'
+import React from "react";
 import Qualification from '../../components/qualification/qualification';
-
+import { CssBaseline, GlobalStyles } from "@mui/material";
+import Header from "../../components/common/Header";
 
 export default function QualificationPage({ params }) {
 
   /* Obtenemos al empleado solicitado */
-  // const [, , getEmployee ] = useEmployee()
-  // const { id } = params
+  const { id } = params
   /*              ---                 */
 
-  /* Obtenemos las preguntas con su  posibles respuestas */
-  const [listQuestions, setListQuestions] = useState([])
-  const {token} = useContext(ContextLogin)
-  // const [, setQuestions] = useContext(ContextQuestion)
-
-  useEffect(() => {
-    getQuestionStructure(token)
-    .then( questions => {
-      setListQuestions(questions.data) /* cuando pongo el data me da bucle infinito*/
-      // setQuestions(questions.data)
-    })
-  }, [])
-  /*                          ------                     */
-
-  console.log(listQuestions)
-
   return (
-      // listQuestions === [] ? (<Qualification form={listQuestions} />) : (<p>Entra aca</p>)
-      <Qualification form={listQuestions} />
+    <React.Fragment>
+      <GlobalStyles styles={{ ul: { margin:0, padding:0, listStyle: 'none'}}}/>
+      <CssBaseline />
+      <Header />
+      <Qualification idEmployee={id}/>
+    </React.Fragment>
   )
 }

@@ -24,15 +24,11 @@ function LoginPage() {
     }, [isLogged, setLocation])
 
     const handleSubmit = (event) => {
-
         event.preventDefault()
         const data = new FormData(event.currentTarget)
-
         dataComponent.username = data.get('username')
         dataComponent.password = data.get('password')
-
         signIn(dataComponent)
-
     }
 
     const theme = createTheme()
@@ -41,11 +37,7 @@ function LoginPage() {
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
-                <Box
-                    sx={{
-                        marginTop: 8,
-                    }}
-                >
+                <Box sx={{ marginTop: 8, }} >
                     <Card sx={{
                         maxWidth: 400,
                         padding: 5,

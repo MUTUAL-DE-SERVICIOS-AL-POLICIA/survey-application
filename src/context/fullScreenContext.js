@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 
-const Context = React.createContext({})
+const Context = React.createContext([])
 
 export function FullScreenContextProvider({ children }) {
-    const [childId, setChildId] = useState(null)
 
-    return <Context.Provider value={({ childId, setChildId })}>
+    const [idElement, setIdElement] = useState(null)
+
+    return <Context.Provider value={([ idElement, setIdElement ])}>
         { children }
     </Context.Provider>
 }

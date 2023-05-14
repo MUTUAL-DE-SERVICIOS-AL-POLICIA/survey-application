@@ -16,13 +16,13 @@ export default function EmployeePage() {
 
   const [listEmployees, setListEmployees] = useState([])
   const {token} = useContext(ContextLogin)
-  const [, saveEmployees] = useContext(Context)
+  const [, saveEmployees] = useContext(Context) /* revisarlo */
 
     useEffect(() => {
       getEmployees(token)
         .then(employees => {
           setListEmployees(employees.data)
-          saveEmployees(employees.data)
+          saveEmployees(employees.data) /* revisarlo */
         })
     }, [])
 

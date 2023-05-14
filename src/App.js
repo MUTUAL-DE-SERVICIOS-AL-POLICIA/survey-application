@@ -3,8 +3,8 @@ import EmployeePage from './pages/employees/employeePage'
 import LoginPage from './pages/login/LoginPage'
 import QualificationPage from './pages/qualification/QualificationPage'
 import { UserContextProvider } from './context/userContext'
-import { EmployeeContextProvider } from './context/employeeContext'
-import { QuestionContextProvider } from './context/questionContext'
+import { EmployeeContextProvider } from './context/employeeContext' /* revisarlo */
+import { ActiveDialogContext } from './context/activeDialogContext';
 
 function App() {
 
@@ -21,12 +21,12 @@ function App() {
             component={EmployeePage}
             path="/employees"
           />
-          <QuestionContextProvider>
+          <ActiveDialogContext>
             <Route
               component={QualificationPage}
               path="/qualification/:id"
             />
-          </QuestionContextProvider>
+          </ActiveDialogContext>
         </EmployeeContextProvider>
       </UserContextProvider>
     </Switch>

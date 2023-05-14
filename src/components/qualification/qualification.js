@@ -1,42 +1,69 @@
-import React, { useContext, useState } from 'react'
-import GlobalStyles from '@mui/material/GlobalStyles';
-import CssBaseline from '@mui/material/CssBaseline';
-import  Header   from '../../components/common/Header'
-import ContextQuestion from '../../context/questionContext';
+import React, { useContext, useState, useEffect } from 'react'
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid'
 import { Box, CardActionArea, CardHeader } from '@mui/material';
-import { Card, CardContent, CardMedia } from "@mui/material"
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-
+import { Card, CardContent } from "@mui/material"
+import { createTheme } from '@mui/material/styles';
+import { useRef } from 'react'
+import ContextLogin from '../../context/userContext'
+import { getQuestionStructure, sendEvaluation } from '../../services/qualification/qualificationService';
+import ResponsiveAlert from '../common/ResponsiveAlert'
+import ContextDialog from '../../context/activeDialogContext'
 
 const theme = createTheme();
 
-export default function Qualification( { form }) {
+export default function Qualification( props ) {
 
+    const [open, setOpen] = useContext(ContextDialog)
+
+    const { idEmployee } = props
+
+    /* Obtenemos las preguntas con su  posibles respuestas */
+    const [listQuestions, setListQuestions] = useState([])
+    const {token} = useContext(ContextLogin)
+
+    useEffect(() => {
+      getQuestionStructure(token)
+      .then( questions => {
+        setListQuestions(questions.data) /* cuando pongo el data me da bucle infinito*/
+      })
+    }, [])
+    /*                          ------                     */
+
+    let form = listQuestions
+
+    // const fullScrenReferens = useRef(null)
     const { questions } = form
 
-    if(questions !== undefined) {
-      console.log(questions)
-    }
-
     const tiers = [
-        "/bueno.gif",
+      "/bueno.gif",
       "/regular.gif",
-    "/malo.gif"
+      "/malo.gif"
     ];
 
+    async function handleAnswer(idQuestion, idAnswer) {
+
+      let idSurvey = form.id
+      const answer = {}
+      answer.question_id = idQuestion
+      answer.answer_option_id = idAnswer
+      const answers = []
+      answers.push(answer)
+
+      let active = await sendEvaluation({ idEmployee, idSurvey, answers}) // realiza el servicio
+
+      setOpen(active)
+
+    }
+
     return (
-      <React.Fragment>
-         <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none' } }} />
-         <CssBaseline />
-         <Header />
+      <div id="screen">
          {
             questions !== undefined ? (
               questions.map((questions, index) => (
-                <>
-                  <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 3, pb: 3 }} key={index}>
+                <div key={index}>
+                  <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 3, pb: 3 }} >
                     <Typography
                       component="h1"
                       variant="h2"
@@ -50,8 +77,8 @@ export default function Qualification( { form }) {
                       Por favor responda la pregunta
                     </Typography>
                   </Container>
-                  <Container maxWidth="md" component="main">
-                    <Grid container spacing={5} alignItems="flex-end">
+                  <Container maxWidth="md" component="main" >
+                    <Grid container spacing={5} alignItems="flex-end" >
                       {
                         questions.answers.map((answer, index) => (
                           <Grid
@@ -61,7 +88,7 @@ export default function Qualification( { form }) {
                             sm={6}
                             md={4}
                           >
-                            <CardActionArea>
+                            <CardActionArea onClick={() => handleAnswer(questions.id, answer.id)}>
                               <Card elevation={2}>
                                 <CardHeader
                                   title={answer.description}
@@ -78,7 +105,7 @@ export default function Qualification( { form }) {
                                     sx={{
                                       display: 'flex',
                                       justifyContent: 'center',
-                                      alignItems: 'baseline', 
+                                      alignItems: 'baseline',
                                       mb: 2
                                     }}
                                   >
@@ -92,7 +119,7 @@ export default function Qualification( { form }) {
                       }
                     </Grid>
                   </Container>
-                </>
+                </div>
               ))
             ) : (
                   <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 8, pb: 6 }}>
@@ -105,10 +132,10 @@ export default function Qualification( { form }) {
                     >
                       Aún no hay preguntas
                     </Typography>
-
                   </Container>
                 )
-            }
-       </React.Fragment>
+          }
+          <ResponsiveAlert />
+        </div>
     );
   }
