@@ -5,6 +5,8 @@ import Typography from '@mui/material/Typography';
 
 export default function Employee({ dataEmployee }) {
 
+    let picture = dataEmployee.picture
+
     const [, navigate] = useLocation()
 
     const handleClick = (id) => {
@@ -19,7 +21,7 @@ export default function Employee({ dataEmployee }) {
                 <CardMedia
                     component="img"
                     height="160"
-                    // image={dataEmployee.picture}
+                    image={dataEmployee.picture}
                     alt="random"
                 />
                 <CardContent sx={{ flexGrow: 1 }}>

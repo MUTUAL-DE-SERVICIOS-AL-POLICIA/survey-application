@@ -5,6 +5,7 @@ import QualificationPage from './pages/qualification/QualificationPage'
 import { UserContextProvider } from './context/userContext'
 import { EmployeeContextProvider } from './context/employeeContext' /* revisarlo */
 import { ActiveDialogContext } from './context/activeDialogContext';
+import { FullScreenContextProvider } from './context/fullScreenContext'
 
 function App() {
 
@@ -22,10 +23,12 @@ function App() {
             path="/employees"
           />
           <ActiveDialogContext>
-            <Route
-              component={QualificationPage}
-              path="/qualification/:id"
-            />
+            <FullScreenContextProvider>
+              <Route
+                component={QualificationPage}
+                path="/qualification/:id"
+              />
+            </FullScreenContextProvider>
           </ActiveDialogContext>
         </EmployeeContextProvider>
       </UserContextProvider>

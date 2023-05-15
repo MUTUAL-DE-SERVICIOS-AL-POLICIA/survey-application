@@ -4,9 +4,9 @@ const Context = React.createContext([])
 
 export function FullScreenContextProvider({ children }) {
 
-    const [idElement, setIdElement] = useState(null)
+    const [referens, setReferens] = useState(null)
 
-    return <Context.Provider value={([ idElement, setIdElement ])}>
+    return <Context.Provider value={([ referens, setReferens ])}>
         { children }
     </Context.Provider>
 }

@@ -1,21 +1,38 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect, forwardRef } from 'react'
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid'
 import { Box, CardActionArea, CardHeader } from '@mui/material';
 import { Card, CardContent } from "@mui/material"
-import { createTheme } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useRef } from 'react'
 import ContextLogin from '../../context/userContext'
 import { getQuestionStructure, sendEvaluation } from '../../services/qualification/qualificationService';
 import ResponsiveAlert from '../common/ResponsiveAlert'
 import ContextDialog from '../../context/activeDialogContext'
+import COntextReferences from '../../context/fullScreenContext'
 
-const theme = createTheme();
+const theme = createTheme({
+  palette: {
+    mode: 'light',
+    background: {
+      default: '#FFFFFF', // color de fondo predeterminado
+    },
+    text: {
+      primary: '#000000', // color de texto predeterminado
+    },
+  },
+});
 
-export default function Qualification( props ) {
+const Qualification = forwardRef(( props, ref ) => {
 
+    // console.log("eso es ref")
+    // console.log(ref)
+
+    const [referens, setReferens] = useContext(COntextReferences)
     const [open, setOpen] = useContext(ContextDialog)
+
+    setReferens(ref)
 
     const { idEmployee } = props
 
@@ -58,12 +75,13 @@ export default function Qualification( props ) {
     }
 
     return (
-      <div id="screen">
+      <ThemeProvider theme={theme}>
+      <Box sx={{ backgroundColor: '#ffffff'}} ref={ref}>
          {
             questions !== undefined ? (
               questions.map((questions, index) => (
-                <div key={index}>
-                  <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 3, pb: 3 }} >
+                <Box  key={index}>
+                  <Container  disableGutters maxWidth="sm" component="main" sx={{ pt: 3, pb: 3 }} >
                     <Typography
                       component="h1"
                       variant="h2"
@@ -89,14 +107,13 @@ export default function Qualification( props ) {
                             md={4}
                           >
                             <CardActionArea onClick={() => handleAnswer(questions.id, answer.id)}>
-                              <Card elevation={2}>
+                              <Card elevation={3}>
                                 <CardHeader
                                   title={answer.description}
                                   titleTypographyProps={{ align: 'center' }}
-                                  subheaderTypographyProps={{ align: 'center' }}
                                   sx={{
                                     backgroundColor: (theme) => theme.palette.mode === 'light'
-                                      ? theme.palette.grey[200]
+                                      ? theme.palette.grey[300]
                                       : theme.palette.grey[700]
                                   }}
                                 />
@@ -109,7 +126,7 @@ export default function Qualification( props ) {
                                       mb: 2
                                     }}
                                   >
-                                    <img src={tiers[answer.id - 1]} alt="GIF bueno" style={{ width: '100%', height:'100%', objectFit:'cover'}}/>
+                                    <img src={tiers[answer.id - 1]} alt="GIF" style={{ width: '100%', height:'100%', objectFit:'cover'}}/>
                                   </Box>
                                 </CardContent>
                               </Card>
@@ -119,7 +136,7 @@ export default function Qualification( props ) {
                       }
                     </Grid>
                   </Container>
-                </div>
+                </Box>
               ))
             ) : (
                   <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 8, pb: 6 }}>
@@ -136,6 +153,9 @@ export default function Qualification( props ) {
                 )
           }
           <ResponsiveAlert />
-        </div>
+        </Box>
+        </ThemeProvider>
     );
   }
+)
+  export default Qualification

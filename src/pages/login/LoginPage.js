@@ -31,11 +31,18 @@ function LoginPage() {
         signIn(dataComponent)
     }
 
-    const theme = createTheme()
+    const theme = createTheme({
+        palette: {
+            background: {
+                image: 'url("/hombre1.jpeg")',
+                blur: '10px'
+            },
+        },
+    })
 
     return (
         <ThemeProvider theme={theme}>
-            <Container component="main" maxWidth="xs">
+            <Container component="main" maxWidth="xs" >
                 <CssBaseline />
                 <Box sx={{ marginTop: 8, }} >
                     <Card sx={{
@@ -43,7 +50,8 @@ function LoginPage() {
                         padding: 5,
                         display: 'flex',
                         flexDirection: 'column',
-                        alignItems: 'center'
+                        alignItems: 'center',
+                        backgroundColor: '#f0f4c3'
                         }}
                     >
                         <Avatar alt="Muserpol" src="/muserpolIcon.png" sx={{ m: 1, width: 100, height: 100 }} />
