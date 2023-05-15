@@ -45,7 +45,7 @@ export default function Header({ qualificationRef, screen }) {
     // if(document.fullscreenElement === null) {
     //     console.log("se ha salido de pantalla completa")
     // }
-    
+
 
     function fullScren() {
         // const container = document.getElementById('qualification')

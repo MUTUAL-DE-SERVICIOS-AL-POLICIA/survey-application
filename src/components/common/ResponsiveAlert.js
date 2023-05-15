@@ -30,11 +30,11 @@ export default function ResponsiveDialog() {
                 aria-labelledby="Gracias por su respuesta"
             >
                 <DialogTitle id="responsive">
-                    !Gracias por responder a nuestra pregunta!
+                    ¡Gracias por ayudarnos a brindarle un mejor servicio!
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Muserpol a su servicio
+                        MUSERPOL al servicio de la familia policial
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>

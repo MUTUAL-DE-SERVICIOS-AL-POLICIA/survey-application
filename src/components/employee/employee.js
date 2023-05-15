@@ -26,7 +26,7 @@ export default function Employee({ dataEmployee }) {
                 />
                 <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="div">
-                        { `${dataEmployee.first_name} ${dataEmployee.last_name} ${dataEmployee.second_last_name}`}
+                        {`${dataEmployee.first_name} ${dataEmployee.last_name} ${dataEmployee.second_last_name}`}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
                         {`${dataEmployee.identity_card}`}

@@ -81,7 +81,7 @@ const Qualification = forwardRef(( props, ref ) => {
             questions !== undefined ? (
               questions.map((questions, index) => (
                 <Box  key={index}>
-                  <Container  disableGutters maxWidth="sm" component="main" sx={{ pt: 3, pb: 3 }} >
+                  <Container  disableGutters maxWidth="md" component="main" sx={{ pt: 3, pb: 3 }} >
                     <Typography
                       component="h1"
                       variant="h2"
@@ -92,7 +92,7 @@ const Qualification = forwardRef(( props, ref ) => {
                       { questions.description}
                     </Typography>
                     <Typography variant='h5' align='center' color="text.secondary" component="p">
-                      Por favor responda la pregunta
+                      Por favor responda la pregunta..
                     </Typography>
                   </Container>
                   <Container maxWidth="md" component="main" >
@@ -126,6 +126,7 @@ const Qualification = forwardRef(( props, ref ) => {
                                       mb: 2
                                     }}
                                   >
+                                    {/* tiers[answer.id] */}
                                     <img src={tiers[answer.id - 1]} alt="GIF" style={{ width: '100%', height:'100%', objectFit:'cover'}}/>
                                   </Box>
                                 </CardContent>

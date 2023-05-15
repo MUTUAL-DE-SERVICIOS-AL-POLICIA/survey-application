@@ -30,7 +30,8 @@ export async function sendEvaluation(params) {
 
     const { token, idEmployee, idSurvey, answers } = params
 
-    let response =  await fetch(`http://192.168.2.99:8000/survey/save_evaluation`, {
+    // let response =  await fetch(`http://192.168.2.99:8000/survey/save_evaluation`, {
+    let response =  await fetch(`${apiURL}/survey/save_evaluation`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
