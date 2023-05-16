@@ -5,14 +5,11 @@ import Grid from '@mui/material/Grid'
 import { Box, CardActionArea, CardHeader } from '@mui/material';
 import { Card, CardContent } from "@mui/material"
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useRef } from 'react'
 import ContextLogin from '../../context/userContext'
 import { getQuestionStructure, sendEvaluation } from '../../services/qualification/qualificationService';
 import ResponsiveAlert from '../common/ResponsiveAlert'
 import ContextDialog from '../../context/activeDialogContext'
-// import COntextReferences from '../../context/fullScreenContext'
 import Employee from '../employee/employee'
-import ContextEmployee from '../../context/employeeContext'
 import { getEmployees  } from '../../services/employee/employee';
 import { useLocation } from 'wouter';
 
@@ -68,7 +65,6 @@ const Qualification = forwardRef(( props, ref ) => {
         }
       })
     }, [])
-    /*                          ------                     */
 
     let form = listQuestions
 
@@ -94,14 +90,13 @@ const Qualification = forwardRef(( props, ref ) => {
       answer.answer_option_id = idAnswer
       const answers = []
       answers.push(answer)
-      let active = await sendEvaluation({ idEmployee, idSurvey, answers}) // realiza el servicio
+      let active = await sendEvaluation({ idEmployee, idSurvey, answers})
       setOpen(active)
 
     }
 
     return (
       <ThemeProvider theme={theme}>
-        {/* #DAEFC8 */}
         <Box ref={ref}>
          {
             questions !== undefined ? (

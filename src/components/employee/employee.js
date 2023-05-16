@@ -5,7 +5,6 @@ import Typography from '@mui/material/Typography';
 
 export default function Employee({ dataEmployee, styles }) {
 
-    let picture = dataEmployee.picture
     const { height, display, flexDirection} = styles
 
     const [, navigate] = useLocation()
@@ -16,7 +15,7 @@ export default function Employee({ dataEmployee, styles }) {
 
     return (
         <Card sx={{ height: {height}, display: {display}, flexDirection: {flexDirection} }}>
-            <CardActionArea onClick={(event) => handleClick(dataEmployee.id) }>
+            <CardActionArea onClick={() => handleClick(dataEmployee.id) }>
                 <CardMedia
                     component="img"
                     height="160"

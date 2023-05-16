@@ -7,10 +7,8 @@ import EmployeeList from '../../components/employee/employeeList';
 import { useContext, useEffect, useState } from 'react';
 import { getEmployees } from '../../services/employee/employee'
 import Header from '../../components/common/Header';
-import Context from '../../context/employeeContext'
 import ContextLogin from '../../context/userContext'
 import { useLocation } from 'wouter'
-import useUser from '../../hooks/useUser'
 
 const theme = createTheme({
   palette: {
@@ -24,7 +22,6 @@ export default function EmployeePage() {
 
   const [listEmployees, setListEmployees] = useState([])
   const {token, setToken} = useContext(ContextLogin)
-  const [, saveEmployees] = useContext(Context) /* revisarlo */
   const [, setLocation] = useLocation('')
 
     useEffect(() => {
@@ -32,7 +29,6 @@ export default function EmployeePage() {
         .then(employees => {
           if(employees.ok) {
             setListEmployees(employees.data)
-            saveEmployees(employees.data) /* revisarlo */
           } else {
             if(employees.status == 401) {
               setToken(null)
