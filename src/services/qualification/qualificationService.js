@@ -3,34 +3,30 @@ const apiURL = process.env.REACT_APP_BASE_API_URL
 const object = {}
 const idForm = 1
 
-// En este archivo deberíamos recuperar el token
+export async function getQuestionStructure( token ) {
 
-export function getQuestionStructure( token ) {
-
-    return fetch(`${apiURL}/survey/get_survey/${idForm}/answers`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-        },
-    }).then(res => {
-        if(!res.ok) {
-            throw new Error('Ocurrio un error en el inicio de sesión')
-        }
-        return res.json()
-    }).then(res => {
-        object.data = res
+    try{
+        const response = await fetch(`${apiURL}/survey/get_survey/${idForm}/answers`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+        })
+        object.ok = response.ok
+        object.status = response.status
+        const result = await response.json()
+        object.data = result
         return object
-    })
+    } catch(e) {
+        throw new Error(`Ocurrió un error\n${e}`)
+    }
 }
 
 export async function sendEvaluation(params) {
 
-    // obtener el token
-
     const { token, idEmployee, idSurvey, answers } = params
 
-    // let response =  await fetch(`http://192.168.2.99:8000/survey/save_evaluation`, {
     let response =  await fetch(`${apiURL}/survey/save_evaluation`, {
         method: 'POST',
         headers: {
@@ -44,7 +40,6 @@ export async function sendEvaluation(params) {
         })
     })
 
-    // console.log(response)
     if(response.ok) {
         if(response.status == '201') {
             return true

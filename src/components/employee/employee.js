@@ -3,9 +3,10 @@ import { CardActionArea } from '@mui/material';
 import { useLocation } from 'wouter';
 import Typography from '@mui/material/Typography';
 
-export default function Employee({ dataEmployee }) {
+export default function Employee({ dataEmployee, styles }) {
 
     let picture = dataEmployee.picture
+    const { height, display, flexDirection} = styles
 
     const [, navigate] = useLocation()
 
@@ -14,9 +15,7 @@ export default function Employee({ dataEmployee }) {
     }
 
     return (
-        <Card
-            sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-        >
+        <Card sx={{ height: {height}, display: {display}, flexDirection: {flexDirection} }}>
             <CardActionArea onClick={(event) => handleClick(dataEmployee.id) }>
                 <CardMedia
                     component="img"

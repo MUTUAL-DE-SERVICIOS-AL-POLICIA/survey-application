@@ -9,20 +9,36 @@ import { getEmployees } from '../../services/employee/employee'
 import Header from '../../components/common/Header';
 import Context from '../../context/employeeContext'
 import ContextLogin from '../../context/userContext'
+import { useLocation } from 'wouter'
+import useUser from '../../hooks/useUser'
 
-const theme = createTheme();
+const theme = createTheme({
+  palette: {
+    background: {
+      default: '#F6FCF0'
+    }
+  }
+});
 
 export default function EmployeePage() {
 
   const [listEmployees, setListEmployees] = useState([])
-  const {token} = useContext(ContextLogin)
+  const {token, setToken} = useContext(ContextLogin)
   const [, saveEmployees] = useContext(Context) /* revisarlo */
+  const [, setLocation] = useLocation('')
 
     useEffect(() => {
       getEmployees(token)
         .then(employees => {
-          setListEmployees(employees.data)
-          saveEmployees(employees.data) /* revisarlo */
+          if(employees.ok) {
+            setListEmployees(employees.data)
+            saveEmployees(employees.data) /* revisarlo */
+          } else {
+            if(employees.status == 401) {
+              setToken(null)
+              setLocation('/')
+            }
+          }
         })
     }, [])
 
@@ -34,7 +50,7 @@ export default function EmployeePage() {
       <main>
         <Box
           sx={{
-            bgcolor: 'background.paper',
+            bgcolor: 'background.default',
             pt: 8,
             pb: 6,
           }}

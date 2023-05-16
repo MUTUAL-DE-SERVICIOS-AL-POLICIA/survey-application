@@ -6,18 +6,4 @@ import { getQuestionStructure } from '../services/qualification/qualificationSer
 export default function useQuestion() {
     const {token} = useContext(ContextUser)
     const [questions, setQuestions] = useContext(Context)
-
-    // const aux = () => {getQuestionStructure(token)
-    //     .then( questions => {
-    //         // setQuestions(questions.data.questions)
-    //     })
-    // }
-
-    // const getQuestion = useCallback(() => {
-    //     questions
-    // }, [token, setQuestions])
-
-    // return {
-    //     getQuestion
-    // }
 }

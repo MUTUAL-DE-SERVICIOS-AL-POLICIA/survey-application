@@ -10,54 +10,81 @@ import ContextLogin from '../../context/userContext'
 import { getQuestionStructure, sendEvaluation } from '../../services/qualification/qualificationService';
 import ResponsiveAlert from '../common/ResponsiveAlert'
 import ContextDialog from '../../context/activeDialogContext'
-import COntextReferences from '../../context/fullScreenContext'
+// import COntextReferences from '../../context/fullScreenContext'
+import Employee from '../employee/employee'
+import ContextEmployee from '../../context/employeeContext'
+import { getEmployees  } from '../../services/employee/employee';
+import { useLocation } from 'wouter';
 
 const theme = createTheme({
   palette: {
     mode: 'light',
     background: {
-      default: '#FFFFFF', // color de fondo predeterminado
+      default: '#DAEFC8', // color de fondo predeterminado
     },
     text: {
       primary: '#000000', // color de texto predeterminado
     },
+    green: {
+      '700': '#DAEFC8',
+      '400': '#AFC69A'
+    }
   },
 });
 
+
 const Qualification = forwardRef(( props, ref ) => {
 
-    // console.log("eso es ref")
-    // console.log(ref)
-
-    const [referens, setReferens] = useContext(COntextReferences)
     const [open, setOpen] = useContext(ContextDialog)
-
-    setReferens(ref)
+    const [employee, setEmployee] = useState(null)
+    const [, setLocation] = useLocation('')
 
     const { idEmployee } = props
 
     /* Obtenemos las preguntas con su  posibles respuestas */
     const [listQuestions, setListQuestions] = useState([])
-    const {token} = useContext(ContextLogin)
+    const {token, setToken} = useContext(ContextLogin)
 
     useEffect(() => {
       getQuestionStructure(token)
       .then( questions => {
-        setListQuestions(questions.data) /* cuando pongo el data me da bucle infinito*/
+        if(questions.ok) {
+          setListQuestions(questions.data) /* cuando pongo el data me da bucle infinito*/
+        } else {
+          if(questions.status == 401) {
+            setToken(null)
+            setLocation('/')
+          }
+        }
+      })
+      getEmployees(token).then( employees => {
+        if(employees.ok) {
+          setEmployee(employees.data.find( emp => emp.id == idEmployee))
+        } else {
+          if(employees.status == 401) {
+            setToken(null)
+            setLocation('/')
+          }
+        }
       })
     }, [])
     /*                          ------                     */
 
     let form = listQuestions
 
-    // const fullScrenReferens = useRef(null)
     const { questions } = form
 
     const tiers = [
-      "/bueno.gif",
+      "/malo.gif",
       "/regular.gif",
-      "/malo.gif"
+      "/bueno.gif"
     ];
+
+    const styles = {
+      height: 160,
+      width: 30,
+      marginBottom: 0,
+    }
 
     async function handleAnswer(idQuestion, idAnswer) {
 
@@ -67,33 +94,38 @@ const Qualification = forwardRef(( props, ref ) => {
       answer.answer_option_id = idAnswer
       const answers = []
       answers.push(answer)
-
       let active = await sendEvaluation({ idEmployee, idSurvey, answers}) // realiza el servicio
-
       setOpen(active)
 
     }
 
     return (
       <ThemeProvider theme={theme}>
-      <Box sx={{ backgroundColor: '#ffffff'}} ref={ref}>
+        {/* #DAEFC8 */}
+        <Box ref={ref}>
          {
             questions !== undefined ? (
               questions.map((questions, index) => (
                 <Box  key={index}>
-                  <Container  disableGutters maxWidth="md" component="main" sx={{ pt: 3, pb: 3 }} >
-                    <Typography
-                      component="h1"
-                      variant="h2"
-                      align="center"
-                      color="text.primary"
-                      gutterBottom
-                    >
-                      { questions.description}
-                    </Typography>
-                    <Typography variant='h5' align='center' color="text.secondary" component="p">
-                      Por favor responda la pregunta..
-                    </Typography>
+                  <Container  disableGutters maxWidth="md" component="main" sx={{ pt: 1, pb: 0 }} >
+                    <Box sx={{display: 'flex', paddingLeft: 2, paddingRight: 5,  paddingTop: 2}}>
+                      <Typography
+                        component="h1"
+                        variant="h2"
+                        align="center"
+                        color="text.primary"
+                        gutterBottom
+                        sx={{
+                           paddingTop: 1,
+                           paddingleft: 1
+                        }}
+                      >
+                        <b>{ questions.description }</b>
+                      </Typography>
+                      {
+                        employee !== null ? <Employee dataEmployee={employee} styles={styles}/> : null
+                      }
+                    </Box>
                   </Container>
                   <Container maxWidth="md" component="main" >
                     <Grid container spacing={5} alignItems="flex-end" >
@@ -113,8 +145,8 @@ const Qualification = forwardRef(( props, ref ) => {
                                   titleTypographyProps={{ align: 'center' }}
                                   sx={{
                                     backgroundColor: (theme) => theme.palette.mode === 'light'
-                                      ? theme.palette.grey[300]
-                                      : theme.palette.grey[700]
+                                      ? theme.palette.green[700]
+                                      : theme.palette.green[400]
                                   }}
                                 />
                                 <CardContent>
@@ -123,10 +155,9 @@ const Qualification = forwardRef(( props, ref ) => {
                                       display: 'flex',
                                       justifyContent: 'center',
                                       alignItems: 'baseline',
-                                      mb: 2
+                                      mb: 0
                                     }}
                                   >
-                                    {/* tiers[answer.id] */}
                                     <img src={tiers[answer.id - 1]} alt="GIF" style={{ width: '100%', height:'100%', objectFit:'cover'}}/>
                                   </Box>
                                 </CardContent>
@@ -155,8 +186,9 @@ const Qualification = forwardRef(( props, ref ) => {
           }
           <ResponsiveAlert />
         </Box>
-        </ThemeProvider>
+      </ThemeProvider>
     );
   }
 )
-  export default Qualification
+
+export default Qualification

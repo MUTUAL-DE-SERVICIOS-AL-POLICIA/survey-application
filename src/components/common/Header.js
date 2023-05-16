@@ -1,8 +1,10 @@
-import { AppBar, Button, Toolbar, Typography } from "@mui/material";
+import { AppBar, Button, CssBaseline, Toolbar, Typography } from "@mui/material";
 import { useLocation } from "wouter";
 import  useUser  from '../../hooks/useUser'
 import { useContext, useRef, useEffect, useState } from 'react'
 import ContextReferencs from '../../context/fullScreenContext'
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Icon from '@mui/material/Icon';
 
 export default function Header({ qualificationRef, screen }) {
 
@@ -16,15 +18,6 @@ export default function Header({ qualificationRef, screen }) {
 
     useEffect(() => {
         document.addEventListener("fullscreenchange", handleFullScreenChange);
-
-    // if(document.fullscreenElement === null) {
-    //     console.log("se ha salido de pantalla completa")
-    // }
-    // if(isFullScreen) {
-    //     console.log("esta modo pantalla completa")
-    // } else {
-    //     console.log("no es pantalla completa")
-    // }
 
         return () => {
             document.removeEventListener("fullscreenchange", handleFullScreenChange);
@@ -40,12 +33,6 @@ export default function Header({ qualificationRef, screen }) {
         signOut()
         navigation('/')
     }
-
-    // console.log(document.fullscreenElement)
-    // if(document.fullscreenElement === null) {
-    //     console.log("se ha salido de pantalla completa")
-    // }
-
 
     function fullScren() {
         // const container = document.getElementById('qualification')
@@ -66,24 +53,36 @@ export default function Header({ qualificationRef, screen }) {
 
     }
 
+    const theme = createTheme({
+        palette:{
+            background: {
+                default: '#A1B68E'
+            },
+            borderBotton: {
+                default: '#7BE421'
+            }
+        },
+    })
+
     return (
+        <ThemeProvider theme={theme}>
         <AppBar
             position="static"
             color="default"
-            evelation={0}
-            sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
+            sx={{ bgcolor: "background.default" }}
         >
             <Toolbar sx={{ flexWrap: 'wrap'}}>
                 <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1}} >
-                    MUSERPOL
+                    <img src="/muserpol-logo2.png" alt="logo" height="50px" width="150px" style={{ marginTop: '6px' }}/>
                 </Typography>
-                <Button onClick={fullScren} variant="outlined" id="full-screen" ref={fullScrenReferens} >
+                <Button onClick={fullScren} variant="outlined" id="full-screen" ref={fullScrenReferens} sx={{borderColor: '#000000', color:'#000000'}}>
                     Pantalla completa
                 </Button>
-                <Button onClick={logout} variant="outlined" sx={{ my:1, mx: 1.5 }}>
+                <Button onClick={logout} variant="outlined" sx={{ my:1, mx: 1.5, borderColor: '#000000', color: '#000000'  }}>
                     Cerrar Sessión
                 </Button>
             </Toolbar>
         </AppBar>
+        </ThemeProvider>
     )
 }

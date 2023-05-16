@@ -1,22 +1,23 @@
 const apiURL = process.env.REACT_APP_BASE_API_URL
-
 const object = {}
 
-export default function login({ username, password}) {
+export default async function login({ username, password}) {
 
-    return fetch(`${apiURL}/survey/api/token/`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({username, password})
-    }).then(res => {
-        if(!res.ok) {
+    try{
+        const response = await fetch(`${apiURL}/survey/api/token/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, password })
+        })
+        if (!response.ok) {
             throw new Error('Ocurrio un error en el inicio de sesión')
         }
-        return res.json()
-    }).then(res => {
-        object.token = res.access
+        const result = await response.json()
+        object.token = result.access
         return object
-    })
+    } catch(e) {
+        throw new Error(`Ocurrió un error\n${e}`)
+    }
 }

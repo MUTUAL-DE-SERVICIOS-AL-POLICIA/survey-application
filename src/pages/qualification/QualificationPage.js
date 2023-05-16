@@ -3,23 +3,31 @@ import Qualification from '../../components/qualification/qualification';
 import { CssBaseline, GlobalStyles } from "@mui/material";
 import Header from "../../components/common/Header";
 import { useRef } from 'react'
-import Context from "../../context/fullScreenContext";
+// import Context from "../../context/fullScreenContext";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 export default function QualificationPage({ params }) {
 
-  /* Obtenemos al empleado solicitado */
   const { id } = params
-  /*              ---                 */
   const qualificationRef = useRef()
-  // const [screen, setScreen] = useState(null)
-  const [referens, setReferens] = useContext(Context)
+  // const [referens, setReferens] = useContext(Context)
+
+  const theme = createTheme({
+    palette: {
+      background: {
+        default: '#F6FCF0'
+      }
+    }
+  });
 
   return (
     <React.Fragment>
-      <GlobalStyles styles={{ ul: { margin:0, padding:0, listStyle: 'none'}}}/>
-      <CssBaseline />
-      <Header qualificationRef={qualificationRef} />
-      <Qualification id="qualification" idEmployee={id} ref={qualificationRef} />
+      <ThemeProvider theme={theme}>
+        <GlobalStyles styles={{ ul: { margin:0, padding:0, listStyle: 'none', bgcolor: 'background.default'}}}/>
+        <CssBaseline />
+        <Header qualificationRef={qualificationRef} />
+        <Qualification id="qualification" idEmployee={id} ref={qualificationRef} />
+      </ThemeProvider>
     </React.Fragment>
   )
 }

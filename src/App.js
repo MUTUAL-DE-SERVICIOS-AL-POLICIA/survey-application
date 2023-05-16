@@ -8,9 +8,7 @@ import { ActiveDialogContext } from './context/activeDialogContext';
 import { FullScreenContextProvider } from './context/fullScreenContext'
 
 function App() {
-
   return (
-    <div>
     <Switch>
       <UserContextProvider>
         <Route
@@ -33,7 +31,6 @@ function App() {
         </EmployeeContextProvider>
       </UserContextProvider>
     </Switch>
-    </div>
   )
 }
 
