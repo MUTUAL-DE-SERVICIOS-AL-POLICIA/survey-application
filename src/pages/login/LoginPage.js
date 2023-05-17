@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Container from '@mui/material/Container'
 import Card from '@mui/material/Card'
@@ -14,6 +14,8 @@ function LoginPage() {
 
     const {signIn, isLogged} = useUser()
 
+    const [isFullScreen, setIsFullScreen] = useState(false)
+
     const dataComponent = {
         username: '',
         password: ''
@@ -23,12 +25,35 @@ function LoginPage() {
         if(isLogged) setLocation('/employees')
     }, [isLogged, setLocation])
 
+    useEffect(() => {
+        document.addEventListener('fullscreenchange', handleFullScreenChange)
+
+        return () => {
+            document.removeEventListener("fullscreenchaneg", handleFullScreenChange)
+        }
+    }, [])
+
+    const handleFullScreenChange = () => {
+        setIsFullScreen(!!document.fullscreenElement)
+    }
+
+
     const handleSubmit = (event) => {
         event.preventDefault()
         const data = new FormData(event.currentTarget)
         dataComponent.username = data.get('username')
         dataComponent.password = data.get('password')
         signIn(dataComponent)
+
+        if (!document.fullscreenElement) {
+            if(document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen()
+            } else if(document.webkitRequestFullscreen) {
+                document.documentElement.webkitRequestFullscreen()
+            } else if(document.msRequestFullscreen) {
+                document.documentElement.msRequestFullscreen()
+            }
+        }
     }
 
     const theme = createTheme({
@@ -51,12 +76,12 @@ function LoginPage() {
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
-                        backgroundColor: '#f0f4c3'
+                        backgroundColor: '#D9E9E8'
                         }}
                     >
                         <Avatar alt="Muserpol" src="/muserpolIcon.png" sx={{ m: 1, width: 100, height: 100 }} />
-                        <Typography component="h1" variant="h5">
-                            Inicio de sesión
+                        <Typography component="h1" variant="h5" align="center">
+                            Calificación de Servicio
                         </Typography>
                         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                             <TextField
@@ -85,7 +110,7 @@ function LoginPage() {
                                 variant="outlined"
                                 sx={{ mt:3, mb:2 }}
                             >
-                                Iniciar sesión
+                                INGRESAR
                             </Button>
                         </Box>
                     </Card>

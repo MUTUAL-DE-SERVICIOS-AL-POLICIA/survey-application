@@ -14,7 +14,7 @@ export default function Employee({ dataEmployee, styles }) {
     }
 
     return (
-        <Card sx={{ height: {height}, display: {display}, flexDirection: {flexDirection} }}>
+        <Card sx={{ height: {height}, display: {display}, flexDirection: {flexDirection}, boxShadow:10 }}>
             <CardActionArea onClick={() => handleClick(dataEmployee.id) }>
                 <CardMedia
                     component="img"

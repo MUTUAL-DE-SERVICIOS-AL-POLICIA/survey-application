@@ -23,8 +23,11 @@ const theme = createTheme({
       primary: '#000000', // color de texto predeterminado
     },
     green: {
-      '700': '#DAEFC8',
-      '400': '#AFC69A'
+      '700': '#F0F8F8',
+      '400': '#F0F8F8'
+    },
+    white: {
+      '400': '#ffffff'
     }
   },
 });
@@ -103,7 +106,7 @@ const Qualification = forwardRef(( props, ref ) => {
               questions.map((questions, index) => (
                 <Box  key={index}>
                   <Container  disableGutters maxWidth="md" component="main" sx={{ pt: 1, pb: 0 }} >
-                    <Box sx={{display: 'flex', paddingLeft: 2, paddingRight: 5,  paddingTop: 2}}>
+                    <Box sx={{display: 'flex', paddingLeft: 2, paddingRight: 5,  paddingTop: 2, marginBottom: 2}}>
                       <Typography
                         component="h1"
                         variant="h2"
@@ -112,13 +115,14 @@ const Qualification = forwardRef(( props, ref ) => {
                         gutterBottom
                         sx={{
                            paddingTop: 1,
-                           paddingleft: 1
+                           paddingleft: 1,
+                           fontWeight: 400
                         }}
                       >
-                        <b>{ questions.description }</b>
+                        { questions.description }
                       </Typography>
                       {
-                        employee !== null ? <Employee dataEmployee={employee} styles={styles}/> : null
+                      employee !== null ? <Employee dataEmployee={employee} styles={styles} /> : null
                       }
                     </Box>
                   </Container>
@@ -136,7 +140,7 @@ const Qualification = forwardRef(( props, ref ) => {
                             <CardActionArea onClick={() => handleAnswer(questions.id, answer.id)}>
                               <Card elevation={3}>
                                 <CardHeader
-                                  title={answer.description}
+                                  title={<Typography variant="h4" component="div" align="center">{answer.description}</Typography>}
                                   titleTypographyProps={{ align: 'center' }}
                                   sx={{
                                     backgroundColor: (theme) => theme.palette.mode === 'light'
@@ -150,7 +154,8 @@ const Qualification = forwardRef(( props, ref ) => {
                                       display: 'flex',
                                       justifyContent: 'center',
                                       alignItems: 'baseline',
-                                      mb: 0
+                                      mb: 0,
+                                      height: 200
                                     }}
                                   >
                                     <img src={tiers[answer.id - 1]} alt="GIF" style={{ width: '100%', height:'100%', objectFit:'cover'}}/>

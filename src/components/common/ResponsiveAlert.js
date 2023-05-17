@@ -5,9 +5,8 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-import { DialogActions } from '@mui/material';
-import Button from '@mui/material/Button';
 import ContextDialog from '../../context/activeDialogContext'
+import { Box } from '@mui/material';
 
 
 export default function ResponsiveDialog() {
@@ -21,6 +20,10 @@ export default function ResponsiveDialog() {
         setOpen(false)
     }
 
+    setTimeout(() => {
+        setOpen(false)
+    }, 4000)
+
     return (
         <div>
             <Dialog
@@ -29,19 +32,17 @@ export default function ResponsiveDialog() {
                 onClose={handleClose}
                 aria-labelledby="Gracias por su respuesta"
             >
-                <DialogTitle id="responsive">
-                    ¡Gracias por ayudarnos a brindarle un mejor servicio!
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        MUSERPOL al servicio de la familia policial
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button autoFocus onClick={handleClose}>
-                        Cerrar
-                    </Button>
-                </DialogActions>
+                <Box textAlign="center">
+                    <img src="/check-mark-verified.gif" alt="GIF" style={{ width: '25%', height:'25%', objectFit:'cover', marginTop: 20}}/>
+                    <DialogTitle id="responsive">
+                        ¡Gracias por ayudarnos a brindarle un mejor servicio!
+                    </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText sx={{textAlign: 'center'}}>
+                            MUSERPOL al servicio de la familia policial
+                        </DialogContentText>
+                    </DialogContent>
+                </Box>
             </Dialog>
         </div>
     )

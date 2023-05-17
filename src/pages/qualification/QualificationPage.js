@@ -13,7 +13,9 @@ export default function QualificationPage({ params }) {
   const theme = createTheme({
     palette: {
       background: {
-        default: '#F6FCF0'
+        // default: '#F6FCF0'
+        default: '#D9E9E8'
+        // default: '#ffffff'
       }
     }
   });
@@ -23,7 +25,7 @@ export default function QualificationPage({ params }) {
       <ThemeProvider theme={theme}>
         <GlobalStyles styles={{ ul: { margin:0, padding:0, listStyle: 'none', bgcolor: 'background.default'}}}/>
         <CssBaseline />
-        <Header qualificationRef={qualificationRef} />
+        <Header />
         <Qualification id="qualification" idEmployee={id} ref={qualificationRef} />
       </ThemeProvider>
     </React.Fragment>
