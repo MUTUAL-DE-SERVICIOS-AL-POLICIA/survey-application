@@ -5,6 +5,11 @@ Application to perform service qualification
 
 - Node v16.18.1 or older
 
+## Initial setup
+- Create env file for credentials
+
+- Get the dependencies `npm install`
+
 ## Deploy with docker
 In the root of your project, run the following:
 
