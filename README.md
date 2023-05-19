@@ -5,26 +5,15 @@ Application to perform service qualification
 
 - Node v16.18.1 or older
 
-## Required dependencies
+## Deploy with docker
+In the root of your project, run the following:
 
-- Material UI
+- `docker build -t survey-application .`
 
-```npm
-    npm install @mui/material @emotion/react @emotion/styled
-```
+Verify that the image has been created
 
-- Wouter
+- `docker images`
 
-```npm
-    npm install wouter
-```
+Run the docker container
 
-
-## Raise the project
-Create the project with React, with the following command:
-
-Get the dependencies:
-
-```npm
-    npm install
-```
+- `docker run -it -p 3000:3000 -v $(pwd):/survey-application survey-aplication`
