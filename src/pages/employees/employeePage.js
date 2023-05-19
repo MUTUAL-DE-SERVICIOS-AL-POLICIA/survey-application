@@ -28,19 +28,19 @@ export default function EmployeePage() {
   const {token, setToken} = useContext(ContextLogin)
   const [, setLocation] = useLocation('')
 
-    useEffect(() => {
-      getEmployees(token)
-        .then(employees => {
-          if(employees.ok) {
-            setListEmployees(employees.data)
-          } else {
-            if(employees.status == 401) {
-              setToken(null)
-              setLocation('/')
-            }
-          }
-        })
-    }, [])
+    // useEffect(() => {
+    //   getEmployees(token)
+    //     .then(employees => {
+    //       if(employees.ok) {
+    //         setListEmployees(employees.data)
+    //       } else {
+    //         if(employees.status == 401) {
+    //           setToken(null)
+    //           setLocation('/')
+    //         }
+    //       }
+    //     })
+    // }, [])
 
 
   return (
@@ -66,7 +66,7 @@ export default function EmployeePage() {
             </Card>
           </div>
         </Box>
-        <EmployeeList employees={listEmployees}/>
+        {/* <EmployeeList employees={listEmployees}/> */}
       </main>
     </ThemeProvider>
   );

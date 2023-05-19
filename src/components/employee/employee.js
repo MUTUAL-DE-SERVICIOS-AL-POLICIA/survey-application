@@ -1,4 +1,4 @@
-import { Button, Card, CardContent, CardMedia, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, SwipeableDrawer } from "@mui/material"
+import { Button, Card, CardContent, CardMedia, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material"
 import { CardActionArea } from '@mui/material';
 import { useLocation } from 'wouter';
 import Typography from '@mui/material/Typography';
