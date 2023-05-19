@@ -4,7 +4,7 @@ WORKDIR /survey-application
 
 COPY package.json .env /public ./
 
-RUN yarn install
+RUN npm install
 
 EXPOSE 3000
 
