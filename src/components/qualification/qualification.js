@@ -73,12 +73,6 @@ const Qualification = forwardRef(( props, ref ) => {
 
     const { questions } = form
 
-    const tiers = [
-      "/malo.gif",
-      "/regular.gif",
-      "/bueno.gif"
-    ];
-
     const styles = {
       height: 160,
       width: 30,
@@ -158,7 +152,7 @@ const Qualification = forwardRef(( props, ref ) => {
                                       height: 200
                                     }}
                                   >
-                                    <img src={tiers[answer.id - 1]} alt="GIF" style={{ width: '100%', height:'100%', objectFit:'cover'}}/>
+                                    <img src={answer.picture} alt="GIF" style={{ width: '100%', height:'100%', objectFit:'cover'}}/>
                                   </Box>
                                 </CardContent>
                               </Card>

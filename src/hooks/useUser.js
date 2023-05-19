@@ -8,11 +8,15 @@ export default function useUser() {
 	const signIn = useCallback(({ username, password }) => {
 		login({ username, password })
 			.then( tokenLogin => {
+				if(tokenLogin.ok) {
             		window.sessionStorage.setItem('token', tokenLogin.token) /* JSON.stringify(tokenLogin.token) */
 					setToken(tokenLogin.token)
-			}).catch(err => {
+				}
+			}).catch(error => {
 				window.sessionStorage.removeItem('token')
-				console.error(err)
+				setToken(null)
+				console.log("aqui")
+				console.error(error)
 			})
 	}, [setToken])
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Avatar from "@mui/material/Avatar";
 import Container from '@mui/material/Container'
 import Card from '@mui/material/Card'
@@ -6,6 +6,7 @@ import { Box, Button, CssBaseline, TextField, Typography } from '@mui/material'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { useLocation } from 'wouter'
 import  useUser  from '../../hooks/useUser'
+import Alert from '@mui/material/Alert'
 
 
 function LoginPage() {
@@ -16,13 +17,18 @@ function LoginPage() {
 
     const [isFullScreen, setIsFullScreen] = useState(false)
 
+    const [showAlert, setShowAlert] = useState(false)
+
     const dataComponent = {
         username: '',
         password: ''
     }
 
     useEffect(() => {
-        if(isLogged) setLocation('/employees')
+        if(isLogged) {
+            setShowAlert(false)
+            setLocation('/employees')
+        }
     }, [isLogged, setLocation])
 
     useEffect(() => {
@@ -44,26 +50,25 @@ function LoginPage() {
         dataComponent.username = data.get('username')
         dataComponent.password = data.get('password')
         signIn(dataComponent)
-
-        if (!document.fullscreenElement) {
-            if(document.documentElement.requestFullscreen) {
-                document.documentElement.requestFullscreen()
-            } else if(document.webkitRequestFullscreen) {
-                document.documentElement.webkitRequestFullscreen()
-            } else if(document.msRequestFullscreen) {
-                document.documentElement.msRequestFullscreen()
+        if(isLogged) {
+            if (!document.fullscreenElement) {
+                if(document.documentElement.requestFullscreen) {
+                    document.documentElement.requestFullscreen()
+                } else if(document.webkitRequestFullscreen) {
+                    document.documentElement.webkitRequestFullscreen()
+                } else if(document.msRequestFullscreen) {
+                    document.documentElement.msRequestFullscreen()
+                }
             }
+        } else if(isLogged == false){
+            setShowAlert(true)
+            setTimeout(() => {
+                setShowAlert(false)
+            }, 4000)
         }
     }
 
-    const theme = createTheme({
-        palette: {
-            background: {
-                image: 'url("/hombre1.jpeg")',
-                blur: '10px'
-            },
-        },
-    })
+    const theme = createTheme()
 
     return (
         <ThemeProvider theme={theme}>
@@ -93,6 +98,7 @@ function LoginPage() {
                                 name="username"
                                 autoComplete="username"
                                 autoFocus
+                                color="primary"
                             ></TextField>
                             <TextField
                                 marign="normal"
@@ -115,6 +121,7 @@ function LoginPage() {
                         </Box>
                     </Card>
                 </Box>
+                { showAlert && ( <Alert severity="error" > Credenciales inválidas </Alert>) }
             </Container>
         </ThemeProvider>
     )

@@ -11,9 +11,8 @@ export default async function login({ username, password}) {
             },
             body: JSON.stringify({ username, password })
         })
-        if (!response.ok) {
-            throw new Error('Ocurrio un error en el inicio de sesión')
-        }
+        object.ok = response.ok
+        object.status = response.status
         const result = await response.json()
         object.token = result.access
         return object
