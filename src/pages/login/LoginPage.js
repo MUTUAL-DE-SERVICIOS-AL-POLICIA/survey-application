@@ -5,7 +5,7 @@ import Card from '@mui/material/Card'
 import { Box, Button, CssBaseline, TextField, Typography } from '@mui/material'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { useLocation } from 'wouter'
-import  useUser  from '../../hooks/useUser'
+import useUser from '../../hooks/useUser'
 import Alert from '@mui/material/Alert'
 
 
@@ -13,7 +13,7 @@ function LoginPage() {
 
     const [, setLocation] = useLocation('')
 
-    const {signIn, isLogged} = useUser()
+    const { signIn, isLogged } = useUser()
 
     const [isFullScreen, setIsFullScreen] = useState(false)
 
@@ -25,11 +25,10 @@ function LoginPage() {
     }
 
     useEffect(() => {
-        if(isLogged) {
-            setShowAlert(false)
+        if (isLogged) {
             setLocation('/employees')
         }
-    }, [isLogged, setLocation])
+    }, [isLogged])
 
     useEffect(() => {
         document.addEventListener('fullscreenchange', handleFullScreenChange)
@@ -44,23 +43,23 @@ function LoginPage() {
     }
 
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault()
         const data = new FormData(event.currentTarget)
         dataComponent.username = data.get('username')
         dataComponent.password = data.get('password')
-        signIn(dataComponent)
-        if(isLogged) {
+        const success = await signIn(dataComponent)
+        if (success) {
             if (!document.fullscreenElement) {
-                if(document.documentElement.requestFullscreen) {
+                if (document.documentElement.requestFullscreen) {
                     document.documentElement.requestFullscreen()
-                } else if(document.webkitRequestFullscreen) {
+                } else if (document.webkitRequestFullscreen) {
                     document.documentElement.webkitRequestFullscreen()
-                } else if(document.msRequestFullscreen) {
+                } else if (document.msRequestFullscreen) {
                     document.documentElement.msRequestFullscreen()
                 }
             }
-        } else if(isLogged == false){
+        } else {
             setShowAlert(true)
             setTimeout(() => {
                 setShowAlert(false)
@@ -82,7 +81,7 @@ function LoginPage() {
                         flexDirection: 'column',
                         alignItems: 'center',
                         backgroundColor: '#D9E9E8'
-                        }}
+                    }}
                     >
                         <Avatar alt="Muserpol" src="/muserpolIcon.png" sx={{ m: 1, width: 100, height: 100 }} />
                         <Typography component="h1" variant="h5" align="center">
@@ -114,14 +113,14 @@ function LoginPage() {
                                 type="submit"
                                 fullWidth
                                 variant="outlined"
-                                sx={{ mt:3, mb:2 }}
+                                sx={{ mt: 3, mb: 2 }}
                             >
                                 INGRESAR
                             </Button>
                         </Box>
                     </Card>
                 </Box>
-                { showAlert && ( <Alert severity="error" > Credenciales inválidas </Alert>) }
+                {showAlert && (<Alert severity="error" > Credenciales inválidas </Alert>)}
             </Container>
         </ThemeProvider>
     )

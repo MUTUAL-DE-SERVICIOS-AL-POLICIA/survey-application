@@ -3,21 +3,24 @@ import Context from '../context/userContext'
 import login from '../services/login/loginService'
 
 export default function useUser() {
-	const {token, setToken} = useContext(Context)
+	const { token, setToken } = useContext(Context)
 
-	const signIn = useCallback(({ username, password }) => {
-		login({ username, password })
-			.then( tokenLogin => {
-				if(tokenLogin.ok) {
-            		window.sessionStorage.setItem('token', tokenLogin.token) /* JSON.stringify(tokenLogin.token) */
-					setToken(tokenLogin.token)
+	const signIn = useCallback(async ({ username, password }) => {
+		try {
+			let response = await login({ username, password })
+
+			if (response.ok)
+				if (response.status === 200) {
+					window.sessionStorage.setItem('token', response.token) /* JSON.stringify(tokenLogin.token) */
+					setToken(response.token)
 				}
-			}).catch(error => {
-				window.sessionStorage.removeItem('token')
-				setToken(null)
-				console.log("aqui")
-				console.error(error)
-			})
+
+			return Boolean(response.token)
+
+		} catch (e) {
+			window.sessionStorage.removeItem('token')
+			setToken(null)
+		}
 	}, [setToken])
 
 	const signOut = useCallback(() => {
