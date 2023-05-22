@@ -2,10 +2,14 @@ FROM node:18
 
 WORKDIR /survey-application
 
-# COPY package.json .env /public ./
-
-# RUN npm install
+COPY package.json .env /public ./
 
 EXPOSE 3000
 
-CMD ["npm", "start"]
+ENV REACT_APP_ENV=development
+
+CMD ["sh", "-c", "if [ \"$REACT_APP_ENV\" = \"production\"]; then \
+    npm run build && npm install -g serve && serve -s build; \
+    else \
+    npm start; \
+    fi"]

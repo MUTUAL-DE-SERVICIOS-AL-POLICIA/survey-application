@@ -8,6 +8,8 @@ Application to perform service qualification
 ## Initial setup
 - Create env file for credentials
 
+- Change ENV variable in development or production mode
+
 - Get the dependencies `npm install`
 
 ## Deploy with docker
@@ -21,4 +23,4 @@ Verify that the image has been created
 
 Run the docker container
 
-- `docker run -it -p 3000:3000 -v $(pwd):/survey-application survey-aplication`
+- `docker run -it -p 3000:3000 -v $(pwd):/survey-application --restart always survey-aplication`
