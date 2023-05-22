@@ -2,7 +2,11 @@ FROM node:18
 
 WORKDIR /survey-application
 
-COPY package.json .env /public ./
+COPY package.json .env ./
+
+COPY public /public/
+
+COPY src ./src
 
 EXPOSE 3000
 
