@@ -23,4 +23,4 @@ Verify that the image has been created
 
 Run the docker container
 
-- `docker run -it -p 3000:3000 -v $(pwd):/survey-application --restart always survey-aplication`
+- `docker run -it -p 3000:3000 -v $(pwd):/survey-application --restart always survey-application`
