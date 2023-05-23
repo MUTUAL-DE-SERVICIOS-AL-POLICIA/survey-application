@@ -9,7 +9,7 @@ import Header from '../../components/common/Header';
 import ContextLogin from '../../context/userContext'
 import { useLocation } from 'wouter'
 import { Breadcrumbs, Card } from '@mui/material';
-import HomeIcon  from '@mui/icons-material/Home'
+import HomeIcon from '@mui/icons-material/Home'
 
 const theme = createTheme({
   palette: {
@@ -25,28 +25,28 @@ const theme = createTheme({
 export default function EmployeePage() {
 
   const [listEmployees, setListEmployees] = useState([])
-  const {token, setToken} = useContext(ContextLogin)
+  const { token, setToken } = useContext(ContextLogin)
   const [, setLocation] = useLocation('')
 
-    useEffect(() => {
-      getEmployees(token)
-        .then(employees => {
-          if(employees.ok) {
-            setListEmployees(employees.data)
-          } else {
-            if(employees.status == 401) {
-              setToken(null)
-              setLocation('/')
-            }
+  useEffect(() => {
+    getEmployees(token)
+      .then(employees => {
+        if (employees.ok) {
+          setListEmployees(employees.data)
+        } else {
+          if (employees.status == 401) {
+            setToken(null)
+            setLocation('/')
           }
-        })
-    }, [])
+        }
+      })
+  }, [])
 
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Header />
+      <Header showReport={true} />
       <main>
         <Box
           sx={{
@@ -55,18 +55,18 @@ export default function EmployeePage() {
             pb: 3,
           }}
         >
-          <div style={{display: 'flex'}}>
-            <Card sx={{boxShadow: 0}}>
-              <Breadcrumbs aria-label="breadcrumb" sx={{marginRight: 2}}>
-                  <HomeIcon sx={{ ml: 1.5 }} fontSize="medium" />
-                  <Typography color="text.primary">
-                    Empleados
-                  </Typography>
+          <div style={{ display: 'flex' }}>
+            <Card sx={{ boxShadow: 0 }}>
+              <Breadcrumbs aria-label="breadcrumb" sx={{ marginRight: 2 }}>
+                <HomeIcon sx={{ ml: 1.5 }} fontSize="medium" />
+                <Typography color="text.primary">
+                  Empleados
+                </Typography>
               </Breadcrumbs>
             </Card>
           </div>
         </Box>
-        <EmployeeList employees={listEmployees}/>
+        <EmployeeList employees={listEmployees} />
       </main>
     </ThemeProvider>
   );

@@ -1,4 +1,4 @@
-import  React, { useContext } from 'react'
+import React, { useContext } from 'react'
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
@@ -22,7 +22,7 @@ export default function ResponsiveDialog() {
 
     setTimeout(() => {
         setOpen(false)
-    }, 4000)
+    }, 6000)
 
     return (
         <div>
@@ -33,15 +33,10 @@ export default function ResponsiveDialog() {
                 aria-labelledby="Gracias por su respuesta"
             >
                 <Box textAlign="center">
-                    <img src="/check-mark-verified.gif" alt="GIF" style={{ width: '25%', height:'25%', objectFit:'cover', marginTop: 20}}/>
+                    <img src="/check-mark-verified.gif" alt="GIF" style={{ width: '25%', height: '25%', objectFit: 'cover', marginTop: 20 }} />
                     <DialogTitle id="responsive">
                         ¡Gracias por ayudarnos a brindarle un mejor servicio!
                     </DialogTitle>
-                    <DialogContent>
-                        <DialogContentText sx={{textAlign: 'center'}}>
-                            MUSERPOL al servicio de la familia policial
-                        </DialogContentText>
-                    </DialogContent>
                 </Box>
             </Dialog>
         </div>

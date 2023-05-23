@@ -40,9 +40,9 @@ export default function QualificationPage({ params }) {
   return (
     <React.Fragment>
       <ThemeProvider theme={theme}>
-        <GlobalStyles styles={{ ul: { margin:0, padding:0, listStyle: 'none', bgcolor: 'background.default'}}}/>
+        <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none', bgcolor: 'background.default' } }} />
         <CssBaseline />
-        <Header />
+        <Header showReport={false} />
         <Qualification id="qualification" idEmployee={id} ref={qualificationRef} />
       </ThemeProvider>
     </React.Fragment>
