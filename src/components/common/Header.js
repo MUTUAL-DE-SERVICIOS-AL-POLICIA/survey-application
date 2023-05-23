@@ -63,6 +63,7 @@ export default function Header({ showReport }) {
                 document.documentElement.msRequestFullscreen()
             }
         }
+        handleCloseMenu()
     }
 
     const downloadReport = () => {
@@ -83,6 +84,7 @@ export default function Header({ showReport }) {
     }
     const getReport = () => {
         setOpen(true)
+        handleCloseMenu()
     }
 
     const theme = createTheme({
@@ -106,7 +108,6 @@ export default function Header({ showReport }) {
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget)
-        handleCloseMenu()
     }
 
     return (
