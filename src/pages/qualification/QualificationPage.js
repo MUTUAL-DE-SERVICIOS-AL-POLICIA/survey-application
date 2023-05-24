@@ -15,9 +15,7 @@ export default function QualificationPage({ params }) {
   const theme = createTheme({
     palette: {
       background: {
-        // default: '#F6FCF0'
         default: '#D9E9E8'
-        // default: '#ffffff'
       }
     }
   });

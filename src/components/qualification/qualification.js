@@ -7,11 +7,11 @@ import { Card, CardContent } from "@mui/material"
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ContextLogin from '../../context/userContext'
 import { getQuestionStructure, sendEvaluation } from '../../services/qualification/qualificationService';
-import ResponsiveAlert from '../common/ResponsiveAlert'
 import ContextDialog from '../../context/activeDialogContext'
-import Employee from '../employee/employee'
 import { getEmployees } from '../../services/employee/employee';
 import { useLocation } from 'wouter';
+import Swal from 'sweetalert2'
+
 
 const theme = createTheme({
   palette: {
@@ -26,12 +26,30 @@ const theme = createTheme({
       '700': '#419387',
       '400': '#F0F8F8'
     },
-    white: {
-      '400': '#ffffff'
-    }
   },
 });
 
+
+const dialog = () => {
+  return <div>{
+    Swal.fire({
+      toast: false,
+      title: '¡GRACIAS!',
+      icon: 'success',
+      showConfirmButton: false,
+      timer: 7000,
+      timerProgressBar: true,
+      allowOutsideClick: false,
+      width: '25em',
+      backdrop: `
+      rgba(0,0,0,0.4)
+      center center
+      no-repeat
+      `,
+    })
+  }
+  </div>
+}
 
 const Qualification = forwardRef((props, ref) => {
 
@@ -73,11 +91,6 @@ const Qualification = forwardRef((props, ref) => {
 
   const { questions } = form
 
-  const styles = {
-    height: 160,
-    width: 30,
-    marginBottom: 0,
-  }
 
   async function handleAnswer(idQuestion, idAnswer) {
 
@@ -88,12 +101,11 @@ const Qualification = forwardRef((props, ref) => {
     const answers = []
     answers.push(answer)
     let active = await sendEvaluation({ idEmployee, idSurvey, answers })
-    setOpen(active)
-
+    dialog()
   }
 
   return (
-    <ThemeProvider theme={theme}>
+    < ThemeProvider theme={theme} >
       <Box ref={ref} sx={{ paddingBottom: 5 }}>
         {
           questions !== undefined ? (
@@ -114,9 +126,6 @@ const Qualification = forwardRef((props, ref) => {
                     >
                       {questions.description}
                     </Typography>
-                    {/* {
-                      employee !== null ? <Employee dataEmployee={employee} styles={styles} /> : null
-                    } */}
                     <Card sx={{ height: '100%', width: '25%', marginLeft: 5, display: 'flex', flexDirection: 'column', boxShadow: 10 }}>
                       <CardMedia
                         component="img"
@@ -141,7 +150,7 @@ const Qualification = forwardRef((props, ref) => {
                           <CardActionArea onClick={() => handleAnswer(questions.id, answer.id)}>
                             <Card elevation={3}>
                               <CardHeader
-                                title={<Typography variant="h4" component="div" align="center" style={{ color: "#ffffff" }}>{answer.description}</Typography>}
+                                title={<Typography variant="h4" component="div" align="center" style={{ color: "#ffffff" }}>{answer.description.toUpperCase()}</Typography>}
                                 titleTypographyProps={{ align: 'center' }}
                                 sx={{
                                   backgroundColor: (theme) => theme.palette.mode === 'light'
@@ -179,15 +188,15 @@ const Qualification = forwardRef((props, ref) => {
                 align="center"
                 color="text.primary"
                 gutterBottom
+                sx={{ fontWeight: 400 }}
               >
                 Aún no hay preguntas
               </Typography>
             </Container>
           )
         }
-        <ResponsiveAlert />
       </Box>
-    </ThemeProvider>
+    </ThemeProvider >
   );
 }
 )
