@@ -43,7 +43,7 @@ export default function Employee({ dataEmployee, styles }) {
                         {`${dataEmployee.identity_card}`}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                        {`${dataEmployee.active}`}
+                        {dataEmployee.active ? 'Activo' : 'Inactivo'}
                     </Typography>
                 </CardContent>
             </CardActionArea>
