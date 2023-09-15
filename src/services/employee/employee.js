@@ -5,7 +5,7 @@ const object = {}
 export async function getEmployees( token ) {
 
     try{
-        const response = await fetch(`${apiURL}/survey/employee/`, {
+        const response = await fetch(`${apiURL}/survey/employee_active/`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
